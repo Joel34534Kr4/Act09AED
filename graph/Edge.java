@@ -1,10 +1,10 @@
 package graph;
-
+//Clase generica que representa un arista del grafo
 public class Edge<E> {
-    private Vertex<E> refDest;
-    private int weight;
+    private Vertex<E> refDest; //referencia al vertice destino de la arista
+    private int weight; // ésp de la arista -1 indica que no tiene peso asignado
 
-    public Edge(Vertex<E> refDest) {
+    public Edge(Vertex<E> refDest) { // metodo constructor de arista con peso
         this(refDest, -1); // Peso por defecto -1 (sin peso)
     }
 
@@ -17,7 +17,7 @@ public class Edge<E> {
     public Vertex<E> getRefDest() {
         return refDest;
     }
-
+    // metodo para comparar si dos aristas son iguales
     public boolean equals(Object o) {
         if (o instanceof Edge<?>) {
             Edge<E> e = (Edge<E>) o;
@@ -25,7 +25,8 @@ public class Edge<E> {
         }
         return false;
     }
-
+    //metodo que devuelve la representación en cadena de la arista, mostrando el dato del vertice
+    //destino y el peso si es mayor a -1
     public String toString() {
         return refDest.getData() + (this.weight > -1 ? " [" + this.weight + "]" : "") + ", ";
     }
