@@ -3,17 +3,18 @@ package graph;
 import java.util.*;
 
 import ListLinked.ListLinked;
-
+//clase generica que representa un grafo no dirigido usando listas enlazadas para almacenar vertices y sus aristas adyacentes.
 public class GraphLink<E> {
-    private ListLinked<Vertex<E>> listVertex;
+    // Lista enlazada que almacena los vértices del grafo
+	private ListLinked<Vertex<E>> listVertex;
 
     public GraphLink() {
-        listVertex = new ListLinked<>();
+        listVertex = new ListLinked<>(); //metodo constructor que inicializa la lista de vertices vacia
     }
 
     // Agrega un vértice si no existe
     public boolean insertVertex(E data) {
-        if (searchVertex(data) != null) return false;
+        if (searchVertex(data) != null) return false; //ya existe
         listVertex.add(new Vertex<>(data));
         return true;
     }
@@ -80,21 +81,21 @@ public class GraphLink<E> {
         Vertex<E> v = searchVertex(data);
         if (v == null) return false;
 
-        // Eliminar referencias desde otros vértices
+        // Eliminar todas las aristas que apuntan a este vertice 
         for (int i = 0; i < listVertex.size(); i++) {
             Vertex<E> current = listVertex.get(i);
             int index = current.listAdj.search(new Edge<>(v));
             if (index != -1) current.listAdj.remove(index);
         }
 
-        // Eliminar el vértice
+        // Eliminar el vértice de la lista principal
         listVertex.remove(listVertex.search(v));
         return true;
     }
  // Recorrido en profundidad (DFS)
     public void dfs(E start) {
         Vertex<E> vStart = searchVertex(start);
-        if (vStart == null) return;
+        if (vStart == null) return; //si no existe
 
         Set<Vertex<E>> visited = new HashSet<>();
         System.out.print("DFS: ");
@@ -109,7 +110,7 @@ public class GraphLink<E> {
         System.out.print(v.getData() + " ");
         visited.add(v);
 
-        // Recorrer la lista de adyacencia manualmente con get()
+        // para recorrer la lista de adyacencia manualmente con get()
         for (int i = 0; i < v.listAdj.size(); i++) {
             Edge<E> edge = v.listAdj.get(i);
             Vertex<E> neighbor = edge.getRefDest(); // Usamos el getter
@@ -134,7 +135,7 @@ public class GraphLink<E> {
             Vertex<E> current = queue.poll();
             System.out.print(current.getData() + " ");
 
-            // Recorrer la lista de adyacencia manualmente con get()
+            // para recorrer la lista de adyacencia manualmente con get()
             for (int i = 0; i < current.listAdj.size(); i++) {
                 Edge<E> edge = current.listAdj.get(i);
                 Vertex<E> neighbor = edge.getRefDest(); // Usamos el getter
@@ -148,7 +149,7 @@ public class GraphLink<E> {
     }
 
 
-    // Mostrar todo el grafo
+    // imprime la representacion del grafo mostrando todos sus vertices y sus aristas
     public void printGraph() {
         for (int i = 0; i < listVertex.size(); i++) {
             System.out.print(listVertex.get(i).toString());
